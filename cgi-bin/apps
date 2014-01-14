@@ -1,0 +1,76 @@
+#!/bin/bash
+#
+# List apps
+#
+
+# httputils creates the associative arrays POST_PARAMS and GET_PARAMS
+if [[ "$SCRIPT_FILENAME" ]]; then
+  . "$(dirname $SCRIPT_FILENAME)/httputils"
+else
+  . "$(dirname $(pwd)$SCRIPT_NAME)/httputils"
+fi
+
+# Serialize JSON -- the proper way
+# Arguments:
+# $1 - an associative array to be printed
+#
+echo_json_array() {
+  local last_idx i
+  declare -a arr=("${!1}")
+  last_idx=$((${#arr[@]} - 1))
+
+  echo -n "["
+  for i in "${!arr[@]}"; do
+    echo -n "\"${arr[$i]}\""
+    if [[ ! "$i" = "$last_idx" ]]; then
+        echo -n ","
+    fi
+  done
+  echo -n "]"
+}
+
+echo_running_apps_array() {
+  local apps
+  apps=( $(docker ps \
+    | awk 'NR > 1 {print $2}' \
+    | sed -e 's,app/\(.*\):latest,\1,')
+  )
+  echo_json_array apps[@]
+}
+
+echo_all_apps_array() {
+  local apps=( $(dokku ls) )
+  echo_json_array apps[@]
+}
+
+do_GET() {
+  echo "Status: 200 OK"
+  echo ""
+  if [[ "${GET_PARAMS[filter]}" = "running" ]]; then
+    echo_running_apps_array
+  else
+    echo_all_apps_array
+  fi
+}
+
+do_405() {
+  echo "Status: 405 Method Not Allowed"
+  echo ""
+  cat <<JSON
+{
+    "error": "No handle for $REQUEST_METHOD"
+}
+JSON
+}
+
+# Common headers
+echo "Content-Type: application/json"
+
+case $REQUEST_METHOD in
+  GET)
+    do_GET
+    ;;
+  *)
+    do_405
+    ;;
+esac

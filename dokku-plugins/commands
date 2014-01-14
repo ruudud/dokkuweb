@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+case "$1" in
+
+  ls)
+    cd "$DOKKU_ROOT"
+    find . -maxdepth 1 -type d ! -name ".*" -exec basename {} \;
+  ;;
+
+  help)
+    cat && cat<<EOF
+    ls 		                                    list all apps
+EOF
+  ;;
+
+esac
+
