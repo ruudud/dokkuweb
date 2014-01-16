@@ -2,6 +2,35 @@
 # HTTP POST and GET params in an associative array
 declare -A GET_PARAMS
 declare -A POST_PARAMS
+declare REMOTE_USER
+
+do_405() {
+  echo "Status: 405 Method Not Allowed"
+  echo ""
+  cat <<JSON
+{
+    "error": "No handle for $REQUEST_METHOD"
+}
+JSON
+}
+
+# Serialize JSON -- the proper way
+# Arguments:
+# $1 - an associative array to be printed
+echo_json_array() {
+  local last_idx i
+  declare -a arr=("${!1}")
+  last_idx=$((${#arr[@]} - 1))
+
+  echo -n "["
+  for i in "${!arr[@]}"; do
+    echo -n "\"${arr[$i]}\""
+    if [[ ! "$i" = "$last_idx" ]]; then
+        echo -n ","
+    fi
+  done
+  echo -n "]"
+}
 
 read_POST_vars() {
   if [[ "$REQUEST_METHOD" = "POST" ]] && [[ ! -z "$CONTENT_LENGTH" ]]; then
@@ -47,6 +76,14 @@ parse_GET_params() {
   done
 }
 
+parse_username() {
+  REMOTE_USER=$(echo $X_AUTHORIZATION \
+                | sed 's,Basic ,,' \
+                | base64 -d \
+                | cut -d ":" -f1)
+}
+
 read_POST_vars
 parse_POST_params
 parse_GET_params
+parse_username

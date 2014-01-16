@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# List apps
+# List and add keys
 #
 
 # httputils creates the associative arrays POST_PARAMS and GET_PARAMS
@@ -10,14 +10,6 @@ else
   . "$(dirname $(pwd)$SCRIPT_NAME)/httputils"
 fi
 
-echo_running_apps_array() {
-  local apps
-  apps=( $(docker ps \
-    | awk 'NR > 1 {print $2}' \
-    | sed -e 's,app/\(.*\):latest,\1,')
-  )
-  echo_json_array apps[@]
-}
 
 echo_all_apps_array() {
   local apps=( $(dokku ls) )
@@ -25,14 +17,21 @@ echo_all_apps_array() {
 }
 
 do_GET() {
+  local keys oldifs
+  oldifs=$IFS
+  IFS=$'\r\n'
+  keys=( $(dokku ls-keys $REMOTE_USER) )
+  IFS=$oldifs
+
   echo "Status: 200 OK"
   echo "Cache-control: max-age=5"
   echo ""
-  if [[ "${GET_PARAMS[filter]}" = "running" ]]; then
-    echo_running_apps_array
-  else
-    echo_all_apps_array
-  fi
+  echo_json_array keys[@]
+}
+
+do_POST() {
+  echo "Status: 201 OK"
+  echo ""
 }
 
 # Common headers
@@ -41,6 +40,9 @@ echo "Content-Type: application/json"
 case $REQUEST_METHOD in
   GET)
     do_GET
+    ;;
+  POST)
+    do_POST
     ;;
   *)
     do_405
