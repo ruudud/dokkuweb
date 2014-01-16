@@ -1,9 +1,7 @@
 /* Source: https://daneden.me/animate/ */
 @-webkit-keyframes pulse {
-    0% { -webkit-transform: scale(1); }
-    50% { -webkit-transform: scale(1.2); }
-    100% { -webkit-transform: scale(1); }
+  50% { -webkit-transform: scale(1.2) rotate(10deg); }
 }
 .anim-pulse {
-    -webkit-animation: pulse 2s infinite;
+  -webkit-animation: pulse 2s infinite;
 }
