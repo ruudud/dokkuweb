@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
+AUTHORIZED_KEYS="/home/dokku/.ssh/authorized_keys"
+
 case "$1" in
 
   ls)
     cd "$DOKKU_ROOT"
     find . -maxdepth 1 -type d ! -name ".*" -exec basename {} \;
+  ;;
+  ls-keys)
+    if [[ -z $2 ]]; then
+      echo "Missing username"
+      exit 1
+    fi
+    grep "NAME=$2" $AUTHORIZED_KEYS \
+        | awk '{print $1 " " $8}' \
+        | sed 's/command="FINGERPRINT=//'
   ;;
 
   help)
