@@ -7,7 +7,7 @@ case "$1" in
 
   ls)
     cd "$DOKKU_ROOT"
-    find . -maxdepth 1 -type d ! -name ".*" -exec basename {} \;
+    find . -maxdepth 1 -type d ! -name ".*" ! -name "ssl" -exec basename {} \;
   ;;
   ls-keys)
     if [[ -z $2 ]]; then
