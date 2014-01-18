@@ -1,15 +1,22 @@
 /* Source of unicodes: http://copypastecharacter.com/ */
-[class^="icon-"] {
+[class*="icon-"] {
     display: inline-block;
 }
 
 .icon-sun {
     color: #ffad00;
-    display: inline-block;
     width: 20px;
     height: 20px;
 }
 .icon-sun:after {
     content: '\2600';
 }
-
+.icon-key {
+    color: #222;
+    width: 20px;
+    height: 20px;
+    -webkit-transform: rotate(90deg);
+}
+.icon-key:after {
+    content: '\26B7';
+}
