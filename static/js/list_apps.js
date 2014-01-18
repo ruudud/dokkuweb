@@ -11,14 +11,14 @@
       domCache.el = document.getElementById('apps');
     }
     apps.forEach(function(app) {
-      var el = document.createElement('article');
-      el.className = 'app';
+      var $el = document.createElement('article');
+      $el.className = 'app';
 
-      var title = document.createElement('h3');
-      title.textContent = app;
+      var $title = document.createElement('h3');
+      $title.textContent = app;
 
-      el.appendChild(title);
-      domCache.el.appendChild(el);
+      $container.appendChild($title);
+      domCache.el.appendChild($el);
     });
   };
 
