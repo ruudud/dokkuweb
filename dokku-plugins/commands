@@ -5,9 +5,17 @@ AUTHORIZED_KEYS="/home/dokku/.ssh/authorized_keys"
 
 case "$1" in
 
-  ls)
+  ls-apps-json)
     cd "$DOKKU_ROOT"
-    find . -maxdepth 1 -type d ! -name ".*" ! -name "ssl" -exec basename {} \;
+    for app in `ls -d */ | grep -v 'ssl\/' | sed -e 's,/$,,'`; do
+      cid=$(cat $app/CONTAINER | cut -b1-12)
+      url=$(cat $app/URL)
+      psinfo=$(docker ps -a \
+          | grep "$cid" \
+          | awk -F '  +' -v q='"' '{OFS=","}
+                { print "\"created\":"q$4q,"\"status\":"q$5q }')
+      echo "{\"id\":\"$cid\",\"name\":\"$app\",\"url\":\"$url\",$psinfo}"
+    done
   ;;
   ls-keys)
     if [[ -z $2 ]]; then
@@ -21,7 +29,8 @@ case "$1" in
 
   help)
     cat && cat<<EOF
-    ls 		                                    list all apps
+    ls-apps-json                                    List all apps with status
+    ls-keys                                         List all fingerprints for user
 EOF
   ;;
 

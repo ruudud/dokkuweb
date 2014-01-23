@@ -17,14 +17,19 @@ JSON
 # Serialize JSON -- the proper way
 # Arguments:
 # $1 - an associative array to be printed
+# $2 - whether to put quotes around objects (default false)
 echo_json_array() {
-  local last_idx i
+  local last_idx i quote=${2}
   declare -a arr=("${!1}")
   last_idx=$((${#arr[@]} - 1))
 
   echo -n "["
   for i in "${!arr[@]}"; do
-    echo -n "\"${arr[$i]}\""
+    if [[ "$quote" ]]; then
+      echo -n "\"${arr[$i]}\""
+    else
+      echo -n "${arr[$i]}"
+    fi
     if [[ ! "$i" = "$last_idx" ]]; then
         echo -n ","
     fi
