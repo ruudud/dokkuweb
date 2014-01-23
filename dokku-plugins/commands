@@ -6,6 +6,8 @@ AUTHORIZED_KEYS="/home/dokku/.ssh/authorized_keys"
 case "$1" in
 
   ls-apps-json)
+    set +o pipefail
+
     cd "$DOKKU_ROOT"
     for app in `ls -d */ | grep -v 'ssl\/' | sed -e 's,/$,,'`; do
       cid=$(cat $app/CONTAINER | cut -b1-12)
@@ -13,9 +15,11 @@ case "$1" in
       psinfo=$(docker ps -a \
           | grep "$cid" \
           | awk -F '  +' -v q='"' '{OFS=","}
-                { print "\"created\":"q$4q,"\"status\":"q$5q }')
-      echo "{\"id\":\"$cid\",\"name\":\"$app\",\"url\":\"$url\",$psinfo}"
+                { print ",\"created\":"q$4q,"\"status\":"q$5q }')
+      echo "{\"id\":\"$cid\",\"name\":\"$app\",\"url\":\"$url\"$psinfo}"
     done
+
+    set -o pipefail
   ;;
   ls-keys)
     if [[ -z $2 ]]; then
