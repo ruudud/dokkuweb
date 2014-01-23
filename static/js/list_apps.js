@@ -11,15 +11,16 @@
       domCache.el = document.getElementById('apps');
     }
     apps.forEach(function(app) {
+      var healthy = app.status && app.status.contains('Up ');
+
       var $container = document.createElement('article');
       $container.className = 'striped';
 
       var $title = document.createElement('h3');
       $title.textContent = app.name + ' ';
 
-      var statusCss = app.status.contains('Up ')
-                        ? 'anim-pulse icon-sun'
-                        : 'anim-shake icon-rain';
+      var statusCss = healthy ? 'anim-pulse icon-sun'
+                              : 'anim-shake icon-rain';
       var $statusIcon = document.createElement('span');
       $statusIcon.className = statusCss;
       $title.appendChild($statusIcon);
