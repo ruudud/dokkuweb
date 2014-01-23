@@ -11,9 +11,17 @@
       domCache.el = document.getElementById('keys');
     }
     var $container = document.createElement('ul');
+    $container.className = 'list-group';
     keys.forEach(function(key) {
       var $key = document.createElement('li');
-      $key.textContent = key;
+
+      var $listIcon = document.createElement('span');
+      $listIcon.className = 'anim-unlock icon-key';
+      $key.appendChild($listIcon);
+
+      var $keyText = document.createTextNode(' ' + key);
+      $key.appendChild($keyText);
+
       $container.appendChild($key);
     });
 

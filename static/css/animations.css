@@ -1,18 +1,25 @@
-/* Source: https://daneden.me/animate/ */
+/* Inspiration: https://daneden.me/animate/ */
 @-webkit-keyframes pulse {
   50% { -webkit-transform: scale(1.2) rotate(10deg); }
 }
 .anim-pulse {
-  -webkit-animation: pulse 2s infinite;
+  -webkit-animation: pulse 3s infinite;
+}
+
+@-webkit-keyframes shake {
+  10%, 20% {-webkit-transform: scale(0.9) rotate(-3deg);}
+  30%, 50%, 70%, 90% {-webkit-transform: scale(1.1) rotate(3deg);}
+  40%, 60%, 80% {-webkit-transform: scale(1.1) rotate(-3deg);}
+  100% {-webkit-transform: scale(1) rotate(0);}
+}
+.anim-shake {
+  -webkit-animation: shake 2s infinite;
 }
 
 @-webkit-keyframes unlock {
-  20% { -webkit-transform: rotatez(90deg) translatey(-5px); }
-  30% { -webkit-transform: rotatez(90deg) rotatey(40deg) translatey(-5px); }
-  50% { -webkit-transform: rotatez(90deg) translatey(-5px); }
-  60% { -webkit-transform: rotatez(90deg) rotatey(40deg) translatey(-5px); }
-  80% { -webkit-transform: rotatez(90deg) translatey(-5px); }
+  20%,50%,80% { -webkit-transform: rotatez(90deg) translatey(-5px) translatex(4px); }
+  30%,60% { -webkit-transform: rotatez(90deg) rotatey(40deg) translatey(-5px) translatex(4px); }
 }
 .anim-unlock {
-  -webkit-animation: unlock 2s infinite;
+  -webkit-animation: unlock 4s infinite;
 }

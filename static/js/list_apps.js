@@ -12,12 +12,32 @@
     }
     apps.forEach(function(app) {
       var $container = document.createElement('article');
-      $container.className = 'app';
+      $container.className = 'striped';
 
       var $title = document.createElement('h3');
-      $title.textContent = app;
+      $title.textContent = app.name + ' ';
+
+      var statusCss = app.status.contains('Up ')
+                        ? 'anim-pulse icon-sun'
+                        : 'anim-shake icon-rain';
+      var $statusIcon = document.createElement('span');
+      $statusIcon.className = statusCss;
+      $title.appendChild($statusIcon);
+
+      var $status = document.createElement('p');
+      $status.textContent = 'Status: ' + app.status;
+
+      var $created = document.createElement('p');
+      $created.textContent = 'Created ' + app.created;
+
+      var $link = document.createElement('a');
+      $link.href = app.url;
+      $link.textContent = 'Go to application';
 
       $container.appendChild($title);
+      $container.appendChild($link);
+      $container.appendChild($status);
+      $container.appendChild($created);
       domCache.el.appendChild($container);
     });
   };

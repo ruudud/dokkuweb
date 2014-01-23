@@ -1,0 +1,16 @@
+.container {
+    width: 50%;
+    min-width: 500px;
+    float: left;
+}
+
+.list-group {
+    list-style: none;
+    padding: 0;
+}
+.striped {
+    padding: 5px;
+}
+.striped:nth-child(2n+1) {
+    background: whitesmoke;
+}
