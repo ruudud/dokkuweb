@@ -11,7 +11,7 @@
       domCache.el = document.getElementById('apps');
     }
     apps.forEach(function(app) {
-      var healthy = app.status && app.status.contains('Up ');
+      var healthy = app.status && app.status.indexOf('Up ') > -1;
 
       var $container = document.createElement('article');
       $container.className = 'striped';
