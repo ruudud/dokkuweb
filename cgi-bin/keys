@@ -34,7 +34,7 @@ do_POST() {
   if [[ -z "$REMOTE_USER" ]]; then
     do_401 "Username missing" && return
   elif [[ -z "$pubkey" ]]; then
-    do_400 "Missing parameter 'pubkey'" && return
+    do_400 "Missing POST parameter 'pubkey'" && return
   fi
 
   # FIXME: Using sudo makes me feel naughty..
@@ -43,6 +43,22 @@ do_POST() {
   echo "Status: 201 OK"
   echo ""
   echo "{ \"fingerprint\": \"$fingerprint\" }"
+}
+
+do_DELETE() {
+  fingerprint=$( urldecode ${GET_PARAMS['fingerprint']} )
+  if [[ -z "$REMOTE_USER" ]]; then
+    do_401 "Username missing" && return
+  elif [[ -z "$fingerprint" ]]; then
+    do_400 "Missing query parameter 'fingerprint'" && return
+  fi
+  error_msg=$(dokku rm-key $REMOTE_USER $fingerprint)
+  if [[ "$?" -ne 0 ]]; then
+    do_500 "Something went wrong when trying to delete key: $error_msg"
+    return
+  fi
+  echo "Status: 204 No Content"
+  echo ""
 }
 
 # Common headers
@@ -54,6 +70,9 @@ case $REQUEST_METHOD in
     ;;
   POST)
     do_POST
+    ;;
+  DELETE)
+    do_DELETE
     ;;
   *)
     do_405

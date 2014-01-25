@@ -4,6 +4,17 @@ declare -A GET_PARAMS
 declare -A POST_PARAMS
 declare REMOTE_USER
 
+do_500() {
+  echo "Status: 500 Internal Server Error"
+  echo ""
+  if [[ -n "$1" ]]; then
+    cat <<JSON
+{
+    "error": "$1"
+}
+JSON
+  fi
+}
 do_400() {
   echo "Status: 400 Bad Request"
   echo ""
@@ -101,6 +112,11 @@ parse_GET_params() {
 
     GET_PARAMS["${k}"]="${v}"
   done
+}
+
+# This is just silly...
+urldecode() {
+  printf '%b' "${1//%/\\x}"
 }
 
 parse_username() {

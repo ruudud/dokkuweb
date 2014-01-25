@@ -35,11 +35,19 @@ case "$1" in
         | awk '{print $1 " " $8}' \
         | sed 's/command="FINGERPRINT=//'
   ;;
+  rm-key)
+    if [[ -z $2 ]] || [[ -z $3 ]]; then
+      echo "Missing username or fingerprint"
+      exit 1
+    fi
+    sed -i "/FINGERPRINT=$3\sNAME=$2/d" $AUTHORIZED_KEYS
+  ;;
 
   help)
     cat && cat<<EOF
     ls-apps-json                                    List all apps with status
     ls-keys                                         List all fingerprints for user
+    rm-key                                          Delete key for user
 EOF
   ;;
 
