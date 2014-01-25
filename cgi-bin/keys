@@ -30,8 +30,19 @@ do_GET() {
 }
 
 do_POST() {
+  pubkey="${POST_PARAMS['pubkey']}"
+  if [[ -z "$REMOTE_USER" ]]; then
+    do_401 "Username missing" && return
+  elif [[ -z "$pubkey" ]]; then
+    do_400 "Missing parameter 'pubkey'" && return
+  fi
+
+  # FIXME: Using sudo makes me feel naughty..
+  fingerprint=$(echo -n "$pubkey" | sudo sshcommand acl-add dokku $REMOTE_USER)
+
   echo "Status: 201 OK"
   echo ""
+  echo "{ \"fingerprint\": \"$fingerprint\" }"
 }
 
 # Common headers

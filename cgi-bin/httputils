@@ -4,6 +4,28 @@ declare -A GET_PARAMS
 declare -A POST_PARAMS
 declare REMOTE_USER
 
+do_400() {
+  echo "Status: 400 Bad Request"
+  echo ""
+  if [[ -n "$1" ]]; then
+    cat <<JSON
+{
+    "error": "$1"
+}
+JSON
+  fi
+}
+do_401() {
+  echo "Status: 401 Unauthorized"
+  echo ""
+  if [[ -n "$1" ]]; then
+    cat <<JSON
+{
+    "error": "$1"
+}
+JSON
+  fi
+}
 do_405() {
   echo "Status: 405 Method Not Allowed"
   echo ""
