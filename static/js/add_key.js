@@ -5,12 +5,21 @@
   }
   
   var onSubmitKey = function($form) {
-    var postData = 'pubkey=' + $form.pubkey.value;
-    var hostId = postData.split(/\s/)[2];
+    var input = $form.pubkey.value;
+
+    // Format of key: algorithm (e.g. ssh-rsa), base64 encoded pubkey and an optional comment
+    var keyObj = input.match(/^(.+)\s((?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?)(?:\s(.+))?$/);
+    if (!keyObj) {
+        console.error('Wrong format in submitted key. Example: "ssh-rsa AAAA...== user@host"');
+        return;
+    }
+
+    var comment = keyObj[3] || '';
+    var postData = 'pubkey=' + input;
     
     var triggerEvent = function (data) {
       var event = new CustomEvent('key:add', {
-        detail: { fingerprint: data.fingerprint + ' ' + hostId }
+        detail: { fingerprint: data.fingerprint + ' ' + comment }
       });
       document.body.dispatchEvent(event);
     };
