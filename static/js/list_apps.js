@@ -47,7 +47,7 @@
     fetch()
       .then(render)
       .catch(function(error) {
-        console.error("Failed getting apps!", error);
+        console.error("Failed getting apps", error);
       });
   });
 

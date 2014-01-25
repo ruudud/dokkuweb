@@ -14,11 +14,17 @@
 
   <section id="keys" class="container">
     <h2>Your Keys</h2>
+    <form id="js-addkey" method="POST" action="/cgi-bin/keys">
+      <textarea name="pubkey" placeholder="Paste ~/.ssh/id_rsa.pub here!"></textarea>
+      <button type="submit">Add new key</button>
+    </form>
   </section>
+
 
   <script src="js/lib/promise-0.1.1.min.js" defer></script>
   <script src="js/xhr_utils.js" defer></script>
   <script src="js/list_apps.js" defer></script>
   <script src="js/list_keys.js" defer></script>
+  <script src="js/add_key.js" defer></script>
 </body>
 </html>

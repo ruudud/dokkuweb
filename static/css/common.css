@@ -4,6 +4,14 @@
     float: left;
 }
 
+/** Form elements **/
+textarea {
+    display: block;
+    min-width: 35em;
+    min-height: 4em;
+}
+
+/** Lists and tables **/
 .list-group {
     list-style: none;
     padding: 0;
