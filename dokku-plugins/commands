@@ -11,6 +11,11 @@ case "$1" in
     cd "$DOKKU_ROOT"
     for app in `ls -d */ | grep -v 'ssl\/' | sed -e 's,/$,,'`; do
       cid=$(cat $app/CONTAINER | cut -b1-12)
+
+      if [[ -z $cid ]]; then
+          continue
+      fi
+
       url=$(cat $app/URL)
       psinfo=$(docker ps -a \
           | grep "$cid" \
