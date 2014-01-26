@@ -21,8 +21,11 @@ contents:
 
     ruud:PIzPiIhlhCr9o
 
+Install fcgiwrapper:
 
-Add the following to `/etc/nginx/sites-enabled/default`:
+    sudo apt-get install fcgiwrapper
+
+Replace `/etc/nginx/sites-enabled/default` with this:
 
     fastcgi_cache_path /etc/nginx/cache levels=1:2 keys_zone=DOKKUWEB:50m;
     fastcgi_cache_key "$scheme$request_method$host$request_uri";
@@ -63,3 +66,5 @@ Add the following to `/etc/nginx/sites-enabled/default`:
         }
     }
 
+If all is well, dokkuweb should be running on http://10.0.0.2/ and you should
+also be able to push apps to this IP address.

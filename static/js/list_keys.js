@@ -5,9 +5,30 @@
   var fetch = function() {
     return xhr.getJSON('/cgi-bin/keys');
   };
+  var deleteKey = function(fingerprint) {
+    return xhr.delete('/cgi-bin/keys?fingerprint=' + encodeURIComponent(fingerprint));
+  };
 
-  var appendKey = function (fingerprint, $container) {
+  var onKeyClick = function(event) {
+    var $el = event.currentTarget;
+    $el.addEventListener('webkitAnimationEnd', function () {
+      $el.remove();
+    });
+
+    var fingerprint = $el.textContent.trim().split(/\s/)[0];
+
+    deleteKey(fingerprint)
+      .then(function () {
+        $el.classList.add('bounceOutRight');
+      })
+      .catch(function(error) {
+        console.error("Failed deleting key", error);
+      });
+  };
+
+  var appendKey = function(fingerprint, $container) {
     var $key = document.createElement('li');
+    $key.className = 'list-key-item';
 
     var $listIcon = document.createElement('span');
     $listIcon.className = 'anim-unlock icon-key';
@@ -16,6 +37,7 @@
     var $keyText = document.createTextNode(' ' + fingerprint);
     $key.appendChild($keyText);
 
+    $key.addEventListener('click', onKeyClick);
     $container.appendChild($key);
   };
 

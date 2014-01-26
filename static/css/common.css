@@ -4,6 +4,19 @@
     float: left;
 }
 
+/** Keys **/
+.list-key-item:hover .icon-key {
+    color: #f00;
+    -webkit-animation: none;
+}
+.list-key-item:hover .icon-key:after {
+    content: '\2716';
+}
+.list-key-item:hover {
+    cursor: pointer;
+    text-decoration: line-through;
+}
+
 /** Form elements **/
 textarea {
     display: block;

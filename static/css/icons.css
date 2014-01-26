@@ -24,3 +24,9 @@
 .icon-key:after {
     content: '\26B7';
 }
+.icon-remove {
+    color: #222;
+}
+.icon-remove:after {
+    content: '\2716';
+}
