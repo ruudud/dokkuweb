@@ -4,29 +4,32 @@ Dokkuweb
 Development
 -----------
 
-Run the Vagrant setup from [dokku](https://github.com/progrium/dokku), add
+1. Run the Vagrant setup from [dokku](https://github.com/progrium/dokku), add
 these lines to the Vagrantfile:
 
+```
     config.vm.synced_folder "/home/youruser/dokkuweb", "/srv/dokkuweb"            
     config.vm.synced_folder "/home/youruser/dokkuweb/dokku-plugins", "/var/lib/dokku/plugins/standard"
+```
 
-Add this to the **sudoers** file inside the virtual machine (`vagrant ssh`,
+2. Add this to the **sudoers** file inside the virtual machine (`vagrant ssh`,
 `visudo`):
 
-    www-data ALL=(ALL)NOPASSWD:/usr/local/bin/dokku, /usr/local/bin/sshcommand
+    `www-data ALL=(ALL)NOPASSWD:/usr/local/bin/dokku, /usr/local/bin/sshcommand`
 
-Some of the functionality demands a logged in user. **ruud:test** will be
+3. Some of the functionality demands a logged in user. **ruud:test** will be
 available if you create the file `/etc/nginx/htpasswd` with the following
 contents:
 
-    ruud:PIzPiIhlhCr9o
+    `ruud:PIzPiIhlhCr9o`
 
-Install fcgiwrapper:
+4. Install fcgiwrap:
 
-    sudo apt-get install fcgiwrapper
+    `sudo apt-get install fcgiwrap`
 
-Replace `/etc/nginx/sites-enabled/default` with this:
+5. Replace `/etc/nginx/sites-enabled/default` with this:
 
+```
     fastcgi_cache_path /etc/nginx/cache levels=1:2 keys_zone=DOKKUWEB:50m;
     fastcgi_cache_key "$scheme$request_method$host$request_uri";
     server {
@@ -65,6 +68,7 @@ Replace `/etc/nginx/sites-enabled/default` with this:
             fastcgi_cache DOKKUWEB;
         }
     }
+```
 
 If all is well, dokkuweb should be running on http://10.0.0.2/ and you should
 also be able to push apps to this IP address.
