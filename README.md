@@ -4,25 +4,25 @@ Dokkuweb
 Development
 -----------
 
-1. Run the Vagrant setup from [dokku](https://github.com/progrium/dokku), add
-   these lines to the Vagrantfile:
+Run the Vagrant setup from [dokku](https://github.com/progrium/dokku), add
+these lines to the Vagrantfile:
 
    config.vm.synced_folder "/home/youruser/dokkuweb", "/srv/dokkuweb"            
    config.vm.synced_folder "/home/youruser/dokkuweb/dokku-plugins", "/var/lib/dokku/plugins/standard"
 
-2. Add this to the **sudoers** file inside the virtual machine (`vagrant ssh`,
-   `visudo`):
+Add this to the **sudoers** file inside the virtual machine (`vagrant ssh`,
+`visudo`):
 
     www-data ALL=(ALL)NOPASSWD:/usr/local/bin/dokku, /usr/local/bin/sshcommand
 
-3. Some of the functionality demands a logged in user. **ruud:test** will be
-   available if you create the file `/etc/nginx/htpasswd` with the following
-   contents:
+Some of the functionality demands a logged in user. **ruud:test** will be
+available if you create the file `/etc/nginx/htpasswd` with the following
+contents:
 
    ruud:PIzPiIhlhCr9o
 
 
-4. Add the following to `/etc/nginx/sites-enabled/default`:
+Add the following to `/etc/nginx/sites-enabled/default`:
 
     fastcgi_cache_path /etc/nginx/cache levels=1:2 keys_zone=DOKKUWEB:50m;
     fastcgi_cache_key "$scheme$request_method$host$request_uri";
