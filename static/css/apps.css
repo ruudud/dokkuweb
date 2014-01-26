@@ -4,3 +4,13 @@ pre.commit-info {
     color: white;
     padding: 5px;
 }
+
+.git-keyword {
+    font-weight: bold;
+}
+
+.git-tree   { color: #FFE3C2; }
+.git-commit { color: #D8AFFF; }
+.git-parent { color: #E89494; }
+.git-author { color: #94BEE8; }
+.git-committer { color: #A2FFCD; }
