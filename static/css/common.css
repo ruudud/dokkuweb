@@ -3,6 +3,33 @@
     min-width: 500px;
     float: left;
 }
+/** Modal **/
+.modal-bg {
+    display: none;
+    position: fixed;
+    background: rgba(0,0,0, 0.6);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.modal-content {
+    position: absolute;
+    width: 1000px;
+    top: 20px;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -500px;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow: auto;
+    background: whitesmoke;
+}
+.modal-close {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+}
 
 /** Keys **/
 .list-key-item:hover .icon-key {

@@ -5,7 +5,7 @@
   }
   
   var onSubmitKey = function($form) {
-    var input = $form.pubkey.value;
+    var input = $form.pubkey.value.trim();
 
     // Format of key: algorithm (e.g. ssh-rsa), base64 encoded pubkey and an optional comment
     var keyObj = input.match(/^(.+)\s((?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?)(?:\s(.+))?$/);

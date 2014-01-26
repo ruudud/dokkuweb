@@ -6,6 +6,14 @@
     return xhr.getJSON('/cgi-bin/apps');
   };
 
+  var onLogClick = function(app, event) {
+    event.preventDefault();
+    var event = new CustomEvent('app:showLog', {
+      detail: { app: app }
+    });
+    document.body.dispatchEvent(event);
+  };
+
   var render = function(apps) {
     if (!domCache.el) {
       domCache.el = document.getElementById('apps');
@@ -35,12 +43,19 @@
       $lastCommit.className = 'commit-info';
       $lastCommit.textContent = 'commit '+ app.lastCommitHash + '\n' + app.lastCommit;
 
-      var $link = document.createElement('a');
-      $link.href = app.url;
-      $link.textContent = 'Go to application';
+      var $appLink = document.createElement('a');
+      $appLink.href = app.url;
+      $appLink.textContent = 'Go to application';
+
+      var $logLink = document.createElement('a');
+      $logLink.href = '#logs-' + app.name;
+      $logLink.textContent = 'Show logs';
+      $logLink.addEventListener('click', onLogClick.bind(onLogClick, app.name), false);
 
       $container.appendChild($title);
-      $container.appendChild($link);
+      $container.appendChild($appLink);
+      $container.appendChild(document.createTextNode(' — '));
+      $container.appendChild($logLink)
       $container.appendChild($status);
       $container.appendChild($created);
       $container.appendChild($lastCommit);
