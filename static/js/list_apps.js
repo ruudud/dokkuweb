@@ -41,7 +41,7 @@
 
       var $lastCommit = document.createElement('pre');
       $lastCommit.className = 'commit-info';
-      $lastCommit.textContent = 'commit '+ app.lastCommitHash + '\n' + app.lastCommit;
+      $lastCommit.innerHTML = gitSyntax('commit '+ app.lastCommitHash + '\n' + app.lastCommit);
 
       var $appLink = document.createElement('a');
       $appLink.href = app.url;
@@ -62,6 +62,16 @@
       domCache.el.appendChild($container);
     });
   };
+
+  // Adds some markup to the git output
+  var gitSyntax = function(text) {
+    var escaper = document.createElement('div');
+    escaper.textContent = text;
+    var escaped = escaper.innerHTML;
+    return escaped.replace(/^(commit|tree|parent|author|committer) (.*)$/mg,
+                           '<span class="git-keyword git-$1">$1</span> $2');
+  };
+
 
   document.addEventListener('DOMContentLoaded', function() {
     fetch()
