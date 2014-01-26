@@ -31,6 +31,10 @@
       var $created = document.createElement('p');
       $created.textContent = 'Created ' + app.created;
 
+      var $lastCommit = document.createElement('pre');
+      $lastCommit.className = 'commit-info';
+      $lastCommit.textContent = 'commit '+ app.lastCommitHash + '\n' + app.lastCommit;
+
       var $link = document.createElement('a');
       $link.href = app.url;
       $link.textContent = 'Go to application';
@@ -39,6 +43,7 @@
       $container.appendChild($link);
       $container.appendChild($status);
       $container.appendChild($created);
+      $container.appendChild($lastCommit);
       domCache.el.appendChild($container);
     });
   };
