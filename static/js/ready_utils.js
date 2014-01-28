@@ -19,7 +19,7 @@
 
   window.onReady = function (fn) {
     if (isLoaded) {
-      setTimeout(fn);
+      window.setTimeout(fn, 0);
     } else {
       fnq.push(fn);
     }
