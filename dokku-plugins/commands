@@ -10,21 +10,22 @@ case "$1" in
 
     cd "$DOKKU_ROOT"
     for app in `ls -d */ | grep -v 'ssl\/' | sed -e 's,/$,,'`; do
+      [[ ! -f "$app/CONTAINER" ]] && continue
+
       cid=$(cat $app/CONTAINER | cut -b1-12)
 
-      if [[ -z $cid ]]; then
-          continue
-      fi
+      [[ -z $cid ]] && continue
 
+      url=$(cat $app/URL)
       lastcommitHash=$(cat $app/refs/heads/master)
       lastcommit=$(cd $app && git cat-file commit `cat refs/heads/master` \
           | python -c 'import json,sys; print json.dumps(sys.stdin.read())')
-      url=$(cat $app/URL)
       psinfo=$(docker ps -a \
           | grep "$cid" \
           | awk -F '  +' -v q='"' '{OFS=","}
                 { print ",\"created\":"q$4q,"\"status\":"q$5q }')
-      echo "{\"id\":\"$cid\",\"name\":\"$app\",\"url\":\"$url\"$psinfo,\"lastCommit\":$lastcommit,\"lastCommitHash\":\"$lastcommitHash\"}"
+      echo -n "{\"id\":\"$cid\",\"name\":\"$app\",\"url\":\"$url\"$psinfo,"
+      echo "\"lastCommit\":$lastcommit,\"lastCommitHash\":\"$lastcommitHash\"}"
     done
 
     set -o pipefail
