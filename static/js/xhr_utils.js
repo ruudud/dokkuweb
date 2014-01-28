@@ -52,4 +52,4 @@
     });
   };
 
-})(window.xhr = window.xhr || {})
+})(window.xhr = window.xhr || {});

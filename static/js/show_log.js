@@ -54,4 +54,4 @@
   };
 
   document.body.addEventListener('app:showLog', showLog);
-})()
+})();

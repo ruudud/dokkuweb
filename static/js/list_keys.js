@@ -66,4 +66,4 @@
   document.body.addEventListener('key:add', function(event) {
     appendKey(event.detail.fingerprint, domCache.keyList);
   });
-})()
+})();
