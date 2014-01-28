@@ -20,10 +20,12 @@
     bottom: 20px;
     left: 50%;
     margin-left: -500px;
-    box-sizing: border-box;
     padding: 10px;
     overflow: auto;
     background: whitesmoke;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 .modal-close {
     position: absolute;
@@ -35,6 +37,8 @@
 .list-key-item:hover .icon-key {
     color: #f00;
     -webkit-animation: none;
+       -moz-animation: none;
+            animation: none;
 }
 .list-key-item:hover .icon-key:after {
     content: '\2716';

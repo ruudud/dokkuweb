@@ -34,5 +34,9 @@
   <script src="js/show_log.js" defer></script>
   <script src="js/list_keys.js" defer></script>
   <script src="js/add_key.js" defer></script>
+  <script>
+    // Weird Firefox padding needed to get `DOMContentLoaded` to fire in
+    // defer'ed scripts. https://bugzilla.mozilla.org/show_bug.cgi?id=688580
+  </script>
 </body>
 </html>

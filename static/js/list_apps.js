@@ -1,5 +1,4 @@
 (function () {
-
   var domCache = {};
 
   var fetch = function() {

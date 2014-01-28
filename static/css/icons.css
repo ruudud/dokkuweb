@@ -20,6 +20,8 @@
 .icon-key {
     color: #222;
     -webkit-transform: rotate(90deg) translatex(4px);
+       -moz-transform: rotate(90deg) translatex(4px);
+            transform: rotate(90deg) translatex(4px);
 }
 .icon-key:after {
     content: '\26B7';

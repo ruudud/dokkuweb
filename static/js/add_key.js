@@ -1,9 +1,9 @@
 (function() {
-    
+
   var save = function (data) {
     return xhr.postWithJSONResponse('/cgi-bin/keys', data);
   }
-  
+
   var onSubmitKey = function($form) {
     var input = $form.pubkey.value.trim();
 
@@ -16,30 +16,30 @@
 
     var comment = keyObj[3] || '';
     var postData = 'pubkey=' + input;
-    
+
     var triggerEvent = function (data) {
       var event = new CustomEvent('key:add', {
         detail: { fingerprint: data.fingerprint + ' ' + comment }
       });
       document.body.dispatchEvent(event);
     };
-    
+
     save(postData)
       .then(triggerEvent)
       .catch(function(error) {
         console.error("Error when saving new key", error);
       });
   };
-  
+
   var bindSubmit = function(id, fn) {
     var $el = document.getElementById(id);
-    addEventListener('submit', function(event) { 
-        event.preventDefault();
-        fn.call(null, $el, event);
+    addEventListener('submit', function(event) {
+      event.preventDefault();
+      fn.call(null, $el, event);
     });
   };
-    
+
   document.addEventListener('DOMContentLoaded', function() {
-     bindSubmit('js-addkey', onSubmitKey);
+    bindSubmit('js-addkey', onSubmitKey);
   });
 })()
