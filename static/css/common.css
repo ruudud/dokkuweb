@@ -3,6 +3,8 @@
     min-width: 500px;
     float: left;
 }
+.error { color: #ff0000; }
+
 /** Modal **/
 .modal-bg {
     display: none;
