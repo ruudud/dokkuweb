@@ -11,9 +11,13 @@
 
   var onKeyClick = function(event) {
     var $el = event.currentTarget;
-    $el.addEventListener('webkitAnimationEnd', function () {
+    var removeElement = function () {
+      $el.removeEventListener('animationend', removeElement, false);
+      $el.removeEventListener('webkitAnimationEnd', removeElement, false);
       $el.remove();
-    });
+    };
+    $el.addEventListener('animationend', removeElement, false);
+    $el.addEventListener('webkitAnimationEnd', removeElement, false);
 
     var fingerprint = $el.textContent.trim().split(/\s/)[0];
 
