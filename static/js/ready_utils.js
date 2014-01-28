@@ -14,7 +14,7 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', complete, false);
   } else {
-    window.setTimeout(complete);
+    window.setTimeout(complete, 0);
   }
 
   window.onReady = function (fn) {
