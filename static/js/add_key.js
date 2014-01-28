@@ -39,7 +39,7 @@
     });
   };
 
-  document.addEventListener('DOMContentLoaded', function() {
+  onReady(function() {
     bindSubmit('js-addkey', onSubmitKey);
   });
 })()
