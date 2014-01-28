@@ -59,7 +59,7 @@
   };
 
 
-  document.addEventListener('DOMContentLoaded', function() {
+  onReady(function() {
     fetch()
       .then(render)
       .catch(function(error) {
