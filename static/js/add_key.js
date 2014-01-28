@@ -2,7 +2,7 @@
 
   var save = function (data) {
     return xhr.postWithJSONResponse('/cgi-bin/keys', data);
-  }
+  };
 
   var onSubmitKey = function($form) {
     var input = $form.pubkey.value.trim();
@@ -42,4 +42,4 @@
   document.addEventListener('DOMContentLoaded', function() {
     bindSubmit('js-addkey', onSubmitKey);
   });
-})()
+})();

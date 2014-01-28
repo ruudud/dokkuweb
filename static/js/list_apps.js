@@ -7,10 +7,10 @@
 
   var onLogClick = function(app, event) {
     event.preventDefault();
-    var event = new CustomEvent('app:showLog', {
+    var customEvent = new CustomEvent('app:showLog', {
       detail: { app: app }
     });
-    document.body.dispatchEvent(event);
+    document.body.dispatchEvent(customEvent);
   };
 
   var render = function(apps) {
@@ -54,7 +54,7 @@
       $container.appendChild($title);
       $container.appendChild($appLink);
       $container.appendChild(document.createTextNode(' — '));
-      $container.appendChild($logLink)
+      $container.appendChild($logLink);
       $container.appendChild($status);
       $container.appendChild($created);
       $container.appendChild($lastCommit);
@@ -80,4 +80,4 @@
       });
   });
 
-})()
+})();
