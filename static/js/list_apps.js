@@ -5,10 +5,11 @@
     return xhr.getJSON('/cgi-bin/apps');
   };
 
-  var onLogClick = function(app, event) {
-    event.preventDefault();
+  var onLogClick = function(app, $container, event) {
+    console.log('log click', app);
+    var $el = $container.querySelector('.js-log-content');
     var customEvent = new CustomEvent('app:showLog', {
-      detail: { app: app }
+      detail: { app: app, el: $el }
     });
     document.body.dispatchEvent(customEvent);
   };
@@ -21,7 +22,6 @@
       var healthy = app.status && app.status.indexOf('Up ') > -1;
 
       var $container = document.createElement('article');
-      $container.className = 'striped';
 
       var $title = document.createElement('h3');
       $title.textContent = app.name + ' ';
@@ -32,32 +32,54 @@
       $statusIcon.className = statusCss;
       $title.appendChild($statusIcon);
 
-      var $status = document.createElement('p');
-      $status.textContent = 'Status: ' + app.status;
+      var $status = document.createElement('div');
+      $status.className = 'app-status';
+      $status.textContent = 'Created ' + app.created + ', Status: ' + app.status;
 
-      var $created = document.createElement('p');
-      $created.textContent = 'Created ' + app.created;
+      var $appInfo = document.createElement('div');
+      $appInfo.className = 'tabs';
 
-      var $lastCommit = document.createElement('pre');
-      $lastCommit.className = 'commit-info';
-      $lastCommit.innerHTML = gitSyntax('commit '+ app.lastCommitHash + '\n' + app.lastCommit);
+      var $commitSection = document.createElement('section');
+      $commitSection.className = 'tab';
+      $commitSection.innerHTML = '<input type="radio" id="commit-' + app.name + '" name="' + app.name + '" checked>'
+        + '<label for="commit-' + app.name + '">Last commit</label>';
 
-      var $appLink = document.createElement('a');
-      $appLink.href = app.url;
-      $appLink.textContent = 'Go to application';
+      var $commitPanel = document.createElement('div');
+      $commitPanel.className = 'tab-panel';
+      var $commitContainer = document.createElement('div');
+      $commitContainer.className = 'tab-content';
+      var $commit = document.createElement('pre');
+      $commit.className = 'commit-info';
+      $commit.innerHTML = gitSyntax('commit '+ app.lastCommitHash + '\n' + app.lastCommit);
+      $commitContainer.appendChild($commit);
 
-      var $logLink = document.createElement('a');
-      $logLink.href = '#logs-' + app.name;
-      $logLink.textContent = 'Show logs';
-      $logLink.addEventListener('click', onLogClick.bind(onLogClick, app.name), false);
+      $commitPanel.appendChild($commitContainer);
+      $commitSection.appendChild($commitPanel);
+
+      var $logSection = document.createElement('section');
+      $logSection.className = 'tab';
+      $logSection.innerHTML = '<input type="radio" id="log-' + app.name + '" name="' + app.name + '">'
+        + '<label for="log-' + app.name + '">Show log</label>';
+      var $logContainer = document.createElement('div');
+      $logContainer.className = 'tab-panel';
+      $logContainer.innerHTML = '<div class="tab-content"><pre class="js-log-content log-info">Fetching log…</pre></div>';
+      $logSection.appendChild($logContainer);
+      $logSection.querySelector('label')
+                 .addEventListener('click',
+                                   onLogClick.bind(onLogClick, app.name, $logContainer),
+                                   false);
+
+      var $appLinkSection = document.createElement('section');
+      $appLinkSection.className = 'tab';
+      $appLinkSection.innerHTML = '<a href="' + app.url + '">Go to application →</a>';
+
+      $appInfo.appendChild($commitSection);
+      $appInfo.appendChild($logSection);
+      $appInfo.appendChild($appLinkSection);
 
       $container.appendChild($title);
-      $container.appendChild($appLink);
-      $container.appendChild(document.createTextNode(' — '));
-      $container.appendChild($logLink);
       $container.appendChild($status);
-      $container.appendChild($created);
-      $container.appendChild($lastCommit);
+      $container.appendChild($appInfo);
       domCache.el.appendChild($container);
     });
   };

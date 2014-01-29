@@ -2,17 +2,17 @@
 
   var FETCH_INTERVAL = 5000;
 
-  var domCache = {};
   var logfetcher;
-  var currentApp;
 
   var fetch = function (app) {
     return xhr.get('/cgi-bin/logs?app=' + app);
   };
 
-  var startAutoFetcher = function () {
+  var startAutoFetcher = function (app) {
+    // Disabled for now..
+    // TODO: Create an object per app that can hold state
     logfetcher = window.setInterval(function () {
-      fetch(currentApp)
+      fetch(app)
         .then(render)
         .catch(function(error) {
           console.error("Failed getting logs for app", error);
@@ -20,34 +20,18 @@
     }, FETCH_INTERVAL);
   };
 
-  var render = function (log) {
-    if (!domCache.modal) {
-        domCache.modal = document.getElementById('modal');
-        domCache.modalContent = domCache.modal.children[0];
-
-        registerCloseHandler(domCache.modal.children[0].children[0]);
-        registerCloseHandler(domCache.modal);
-    }
-    domCache.modalContent.children[1].textContent = log;
-    domCache.modal.style.display = 'block';
-  };
-
-  var registerCloseHandler = function ($el) {
-    $el.addEventListener('click', function (event) {
-      if (event.target === domCache.modalContent) {
-          return;
-      }
-      window.clearTimeout(logfetcher);
-      $el.style.display = 'none';
-    });
+  var render = function ($el, log) {
+    console.log('render', arguments);
+    $el.textContent = log;
   };
 
   var showLog = function (event) {
      var app = event.detail.app;
-     currentApp = app;
+     var $el = event.detail.el;
+     console.log(event);
      fetch(app)
-       .then(render)
-       .then(startAutoFetcher)
+       .then(render.bind(null, $el))
+       //.then(startAutoFetcher.bind(null, app))
        .catch(function(error) {
          console.error("Failed getting logs for app", error);
        });

@@ -1,8 +1,89 @@
-pre.commit-info {
-    border: 1px solid #333;
+.app-status {
+    font-style: italic;
+    margin-bottom: 1em;
+}
+/** Tabbed app info **/
+.tabs {
+    margin: 25px 0;
+}
+.tabs:after {
+    display: table;
+    content: '';
+    clear: both;
+}
+.tabs .tab {
+    display: inline;
+}
+.tab label, .tab a {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+
+    background: #fff;
+    color: rgb(0,0,255);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.tab label:hover, .tab a:hover {
+    background: #eee;
+    border-bottom: 1px solid #eee;
+}
+.tab [type=radio] {
+    position: fixed;
+    bottom: 100%;
+    left: 0;
+    opacity: 0;
+}
+.tabs .tab-panel {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  height: 0;
+  width: 0;
+}
+.tabs .tab-content {
+    display: block;
+    float: left;
+    width: 100%;
+
+    border: 1px solid #222;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+    color: #fff;
+    background: #222;
+}
+.tabs .tab [type="radio"]:checked + label {
+    border-bottom-width: 0;
+    padding-bottom: 11px;
+    z-index: 1;
+
+    background: #222;
+    color: #fff;
+    text-decoration: none;
+}
+.tabs .tab [type="radio"]:checked + label + .tab-panel {
+    display: inline;
+}
+
+.tab-content pre {
+    overflow-x: auto;
+    margin: 0;
+    padding: 0;
     background: #222;
     color: white;
-    padding: 5px;
+}
+
+/** Log **/
+pre.log-info {
+
+}
+
+/** Commit **/
+pre.commit-info {
+
 }
 
 .git-keyword {
