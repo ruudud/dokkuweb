@@ -5,6 +5,25 @@ AUTHORIZED_KEYS="/home/dokku/.ssh/authorized_keys"
 
 case "$1" in
 
+  error-logs)
+    if [[ -z $2 ]]; then
+      echo "Please specify an app to run the command on"
+      exit 1
+    fi
+    APP="$2";
+    if [[ ! -d "$DOKKU_ROOT/$APP" ]]; then
+      echo "App $APP does not exist"
+      exit 1
+    fi
+
+    if [[ -f "$DOKKU_ROOT/$APP/CONTAINER" ]]; then
+      CONTAINER=$(<$DOKKU_ROOT/$APP/CONTAINER)
+      docker logs $CONTAINER 2>&1 | tail -n 100
+    else
+      echo "Application's container not found"
+    fi
+  ;;
+
   ls-apps-json)
     set +o pipefail
 
@@ -49,6 +68,7 @@ case "$1" in
 
   help)
     cat && cat<<EOF
+    error-logs                                      Print stderr from docker logs
     ls-apps-json                                    List all apps with status
     ls-keys                                         List all fingerprints for user
     rm-key                                          Delete key for user
