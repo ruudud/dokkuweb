@@ -1,16 +1,31 @@
+.app-title {
+    margin-bottom: 0;
+}
 .app-status {
     font-style: italic;
-    margin-bottom: 1em;
+    margin-bottom: 10px;
+}
+.app-link + .icon-right {
+    display: none;
+}
+.app-link:hover + .icon-right {
+    display: inline-block;
 }
 /** Tabbed app info **/
 .tabs {
-    margin: 25px 0;
+    margin: 0 0 30px;
 }
 .tabs:after {
     display: table;
     content: '';
     clear: both;
 }
+@media (max-width: 640px) {
+    .tabs {
+        margin: 0 -8px 30px;
+    }
+}
+
 .tabs .tab {
     display: inline;
     position: relative;
@@ -75,16 +90,8 @@
     color: white;
 }
 
-/** Log **/
-pre.log-info {
-
-}
 
 /** Commit **/
-pre.commit-info {
-
-}
-
 .git-keyword {
     font-weight: bold;
 }

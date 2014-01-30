@@ -24,11 +24,17 @@
             transform: rotate(90deg) translatex(4px);
 }
 .icon-key:after {
-    content: '\26B7';
+    content: '\26B7 ';
 }
 .icon-remove {
     color: #222;
 }
 .icon-remove:after {
     content: '\2716';
+}
+.icon-right {
+    display: none;
+}
+.icon-right:after {
+    content: '\2192';
 }

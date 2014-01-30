@@ -30,7 +30,11 @@
       });
   };
 
-  var appendKey = function(fingerprint, $container) {
+  var appendKey = function(key, $container) {
+    key = key.trim().match(/((?:[\w]{2}:?){16})(?:\s(.+)?)?/);
+    var fingerprint = key[1];
+    var comment = key[2];
+
     var $key = document.createElement('li');
     $key.className = 'list-key-item';
 
@@ -38,8 +42,19 @@
     $listIcon.className = 'anim-unlock icon-key';
     $key.appendChild($listIcon);
 
-    var $keyText = document.createTextNode(' ' + fingerprint);
-    $key.appendChild($keyText);
+    var $textPad = document.createTextNode(' ');
+    $key.appendChild($textPad);
+
+    var $fingerprint = document.createElement('span');
+    $fingerprint.className = 'key-fingerprint';
+    $fingerprint.textContent = fingerprint;
+    $key.appendChild($fingerprint);
+    $key.appendChild($textPad.cloneNode());
+
+    var $comment = document.createElement('span');
+    $comment.className = 'key-comment';
+    $comment.textContent = comment;
+    $key.appendChild($comment);
 
     $key.addEventListener('click', onKeyClick);
     $container.appendChild($key);

@@ -70,3 +70,19 @@
   -webkit-animation: bounceOutRight 500ms;
      -moz-animation: bounceOutRight 500ms;
 }
+
+@-webkit-keyframes push {
+  50% {
+    -webkit-transform: translateX(5px) scaleX(0.9) scaleY(1.2);
+  }
+}
+@-moz-keyframes push {
+  50% {
+    -moz-transform: translateX(5px) scaleX(0.9) scaleY(1.2);
+  }
+}
+.anim-push {
+  -webkit-animation: push 0.8s infinite;
+     -moz-animation: push 0.8s infinite;
+}
+

@@ -1,24 +1,32 @@
-/** Keys **/
-.list-key-item:hover .icon-key {
-    color: #f00;
-    -webkit-animation: none;
-       -moz-animation: none;
-            animation: none;
+html {
+    font-size: 100%;
 }
-.list-key-item:hover .icon-key:after {
-    content: '\2716';
+body {
+    margin: 0;
 }
-.list-key-item:hover {
-    cursor: pointer;
-    text-decoration: line-through;
+/** Container **/
+.container {
+    padding: 8px 8px;
+}
+@media (min-width: 950px) {
+    body {
+        background: whitesmoke;
+    }
+    .container {
+        width: 970px;
+        margin: 0 auto;
+        background: #fff;
+    }
 }
 
 /** Form elements **/
 textarea {
     display: block;
-    min-width: 320px;
-    width: 98.5%;
+    width: 100%;
     min-height: 4em;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 /** Lists and tables **/

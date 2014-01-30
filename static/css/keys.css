@@ -1,0 +1,26 @@
+.list-key-item:hover .icon-key {
+    color: #f00;
+    -webkit-animation: none;
+       -moz-animation: none;
+            animation: none;
+}
+.list-key-item:hover .icon-key:after {
+    content: '\2716';
+}
+.list-key-item:hover {
+    cursor: pointer;
+}
+
+.key-fingerprint, .key-comment {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 44%;
+    vertical-align: middle;
+}
+@media (min-width: 730px) {
+    .key-fingerprint, .key-comment {
+        width: auto;
+    }
+}

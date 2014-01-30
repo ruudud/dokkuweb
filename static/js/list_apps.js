@@ -24,6 +24,7 @@
       var $container = document.createElement('article');
 
       var $title = document.createElement('h3');
+      $title.className = 'app-title';
       $title.textContent = app.name + ' ';
 
       var statusCss = healthy ? 'anim-pulse icon-sun'
@@ -49,7 +50,6 @@
       var $commitContainer = document.createElement('div');
       $commitContainer.className = 'tab-content';
       var $commit = document.createElement('pre');
-      $commit.className = 'commit-info';
       $commit.innerHTML = gitSyntax('commit '+ app.lastCommitHash + '\n' + app.lastCommit);
       $commitContainer.appendChild($commit);
 
@@ -62,7 +62,7 @@
         + '<label for="log-' + app.name + '">Show log</label>';
       var $logContainer = document.createElement('div');
       $logContainer.className = 'tab-panel';
-      $logContainer.innerHTML = '<div class="tab-content"><pre class="js-log-content log-info">Fetching log…</pre></div>';
+      $logContainer.innerHTML = '<div class="tab-content"><pre class="js-log-content">Fetching log…</pre></div>';
       $logSection.appendChild($logContainer);
       $logSection.querySelector('label')
                  .addEventListener('click',
@@ -71,7 +71,8 @@
 
       var $appLinkSection = document.createElement('section');
       $appLinkSection.className = 'tab';
-      $appLinkSection.innerHTML = '<a href="' + app.url + '">Go to application →</a>';
+      $appLinkSection.innerHTML = '<a href="' + app.url + '" class="app-link">Visit app</a>'
+                                + '<span class="anim-push icon-right"></span>';
 
       $appInfo.appendChild($commitSection);
       $appInfo.appendChild($logSection);
