@@ -23,7 +23,7 @@
 
     deleteKey(fingerprint)
       .then(function () {
-        $el.classList.add('bounceOutRight');
+        $el.classList.add('anim-bounceOutRight');
       })
       .catch(function(error) {
         console.error("Failed deleting key", error);

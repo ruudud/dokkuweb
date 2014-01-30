@@ -5,13 +5,17 @@
     return xhr.getJSON('/cgi-bin/apps');
   };
 
+  var onCommitClick = function(app, event) {
+    var hideLogEvent = new CustomEvent('app:hideLog:' + app);
+    document.body.dispatchEvent(hideLogEvent);
+  };
+
   var onLogClick = function(app, $container, event) {
-    console.log('log click', app);
     var $el = $container.querySelector('.js-log-content');
-    var customEvent = new CustomEvent('app:showLog', {
+    var showLogEvent = new CustomEvent('app:showLog', {
       detail: { app: app, el: $el }
     });
-    document.body.dispatchEvent(customEvent);
+    document.body.dispatchEvent(showLogEvent);
   };
 
   var render = function(apps) {
@@ -55,6 +59,10 @@
 
       $commitPanel.appendChild($commitContainer);
       $commitSection.appendChild($commitPanel);
+      $commitSection.querySelector('label')
+           .addEventListener('click',
+                             onCommitClick.bind(onCommitClick, app.name),
+                             false);
 
       var $logSection = document.createElement('section');
       $logSection.className = 'tab';
