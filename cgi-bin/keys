@@ -10,12 +10,6 @@ else
   . "$(dirname $(pwd)$SCRIPT_NAME)/httputils"
 fi
 
-
-echo_all_apps_array() {
-  local apps=( $(dokku ls) )
-  echo_json_array apps[@]
-}
-
 do_GET() {
   local keys oldifs
   oldifs=$IFS

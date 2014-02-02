@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Get logs for app
+# Get and set ENV for app
 #
 
 if [[ "$SCRIPT_FILENAME" ]]; then
@@ -10,19 +10,26 @@ else
 fi
 
 do_GET() {
+  local app vars oldifs
   app="${GET_PARAMS['app']}"
+
   if [[ -z "$app" ]]; then
     do_400 "Missing query parameter 'app'" && return
   fi
 
+  oldifs=$IFS
+  IFS=$'\r\n'
+  vars=( $(dokku config "$app" | awk -F ': +' 'NR > 1 {print $1,$2}') )
+  IFS=$oldifs
+
   echo "Status: 200 OK"
   echo "Cache-control: max-age=4"
   echo ""
-  dokku error-logs "$app"
+  echo_json_object vars[@]
 }
 
 # Common headers
-echo "Content-Type: text/plain"
+echo "Content-Type: application/json"
 
 case $REQUEST_METHOD in
   GET)
