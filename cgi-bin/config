@@ -2,12 +2,51 @@
 #
 # Get and set ENV for app
 #
+# Mix QUERY and POST params for now..
+#
 
 if [[ "$SCRIPT_FILENAME" ]]; then
   . "$(dirname $SCRIPT_FILENAME)/httputils"
 else
   . "$(dirname $(pwd)$SCRIPT_NAME)/httputils"
 fi
+
+# Space separated KEYS will be unset
+do_DELETE() {
+  app="${GET_PARAMS['app']}"
+  key="${GET_PARAMS['key']}"
+  if [[ -z "$app" ]]; then
+    do_400 "Missing query parameter 'app'" && return
+  elif [[ -z "$app" ]]; then
+    do_400 "Missing query parameter 'key'" && return
+  fi
+  error_msg=$(dokku config:unset "$app" "$key")
+
+  if [[ "$?" -ne 0 ]]; then
+    do_500 "Something went wrong when trying to unset config: $error_msg"
+    return
+  fi
+
+  echo "Status: 204 No Content"
+  echo ""
+}
+
+do_POST() {
+  app="${GET_PARAMS['app']}"
+  if [[ -z "$app" ]]; then
+    do_400 "Missing query parameter 'app'" && return
+  fi
+  configs=$(echo "$QUERY_STRING_POST" | sed 's,&, ,g')
+  error_msg=$(dokku config:set "$app" "$configs")
+
+  if [[ "$?" -ne 0 ]]; then
+    do_500 "Something went wrong when trying to set config: $error_msg"
+    return
+  fi
+
+  echo "Status: 204 No Content"
+  echo ""
+}
 
 do_GET() {
   local app vars oldifs
@@ -34,6 +73,12 @@ echo "Content-Type: application/json"
 case $REQUEST_METHOD in
   GET)
     do_GET
+    ;;
+  POST)
+    do_POST
+    ;;
+  DELETE)
+    do_DELETE
     ;;
   *)
     do_405
