@@ -3,6 +3,7 @@
     display: inline-block;
     width: 20px;
     height: 20px;
+    vertical-align: middle;
 }
 
 .icon-sun {
@@ -22,12 +23,13 @@
     -webkit-transform: rotate(90deg) translatex(4px);
        -moz-transform: rotate(90deg) translatex(4px);
             transform: rotate(90deg) translatex(4px);
+    vertical-align: top;
 }
 .icon-key:after {
     content: '\26B7 ';
 }
 .icon-remove {
-    color: #222;
+    color: #f00;
 }
 .icon-remove:after {
     content: '\2716';

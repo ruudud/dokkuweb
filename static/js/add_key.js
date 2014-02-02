@@ -1,7 +1,12 @@
 (function() {
+  var domCache = {};
 
-  var save = function (data) {
+  var save = function(data) {
     return xhr.postWithJSONResponse('/cgi-bin/keys', data);
+  };
+
+  var clearKeyInput = function() {
+    domCache.keyInput.value = '';
   };
 
   var onSubmitKey = function($form) {
@@ -26,6 +31,7 @@
 
     save(postData)
       .then(triggerEvent)
+      .then(clearKeyInput)
       .catch(function(error) {
         console.error("Error when saving new key", error);
       });
@@ -33,6 +39,7 @@
 
   var bindSubmit = function(id, fn) {
     var $el = document.getElementById(id);
+    domCache.keyInput = $el.querySelector('textarea');
     addEventListener('submit', function(event) {
       event.preventDefault();
       fn.call(null, $el, event);

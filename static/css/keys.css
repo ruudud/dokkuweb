@@ -1,14 +1,12 @@
-.list-key-item:hover .icon-key {
-    color: #f00;
-    -webkit-animation: none;
-       -moz-animation: none;
-            animation: none;
+.list-key-item:first-child {
+    border-top: 1px solid #ccc;
 }
-.list-key-item:hover .icon-key:after {
-    content: '\2716';
+.list-key-item {
+    border-bottom: 1px solid #ccc;
 }
 .list-key-item:hover {
     cursor: pointer;
+    background: whitesmoke;
 }
 
 .key-fingerprint, .key-comment {

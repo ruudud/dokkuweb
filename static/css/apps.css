@@ -68,6 +68,7 @@
 
     color: #fff;
     background: #222;
+    min-height: 127px;
 }
 .tabs .tab [type="radio"]:checked + label {
     border-bottom-width: 0;

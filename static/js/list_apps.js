@@ -5,17 +5,13 @@
     return xhr.getJSON('/cgi-bin/apps');
   };
 
-  var onCommitClick = function(app, event) {
+  var sendHideLogEvent = function(app) {
     var hideLogEvent = new CustomEvent('app:hideLog:' + app);
     document.body.dispatchEvent(hideLogEvent);
   };
 
-  var onEnvClick = function(app, $container, event) {
-    var $el = $container.querySelector('.js-env-content');
-    var showEnvEvent = new CustomEvent('app:showEnv', {
-      detail: { app: app, el: $el }
-    });
-    document.body.dispatchEvent(showEnvEvent);
+  var onCommitClick = function(app, event) {
+    sendHideLogEvent(app);
   };
 
   var onLogClick = function(app, $container, event) {
@@ -24,6 +20,15 @@
       detail: { app: app, el: $el }
     });
     document.body.dispatchEvent(showLogEvent);
+  };
+
+  var onConfigClick = function(app, $container, event) {
+    sendHideLogEvent(app);
+    var $el = $container.querySelector('.js-config-content');
+    var showConfigEvent = new CustomEvent('app:showConfig', {
+      detail: { app: app, el: $el }
+    });
+    document.body.dispatchEvent(showConfigEvent);
   };
 
   var render = function(apps) {
@@ -78,34 +83,34 @@
         + '<label for="log-' + app.name + '">Show log</label>';
       var $logContainer = document.createElement('div');
       $logContainer.className = 'tab-panel';
-      $logContainer.innerHTML = '<div class="tab-content"><pre class="js-log-content">Fetching log…</pre></div>';
+      $logContainer.innerHTML = '<div class="tab-content"><pre class="js-log-content">Fetching…</pre></div>';
       $logSection.appendChild($logContainer);
       $logSection.querySelector('label')
                  .addEventListener('click',
                                    onLogClick.bind(onLogClick, app.name, $logContainer),
                                    false);
 
-      var $envSection = document.createElement('section');
-      $envSection.className = 'tab';
-      $envSection.innerHTML = '<input type="radio" id="env-' + app.name + '" name="' + app.name + '">'
-        + '<label for="env-' + app.name + '">Show env</label>';
-      var $envContainer = document.createElement('div');
-      $envContainer.className = 'tab-panel';
-      $envContainer.innerHTML = '<div class="tab-content js-env-content">Fetching environment variables…</div>';
-      $envSection.appendChild($envContainer);
-      $envSection.querySelector('label')
+      var $configSection = document.createElement('section');
+      $configSection.className = 'tab';
+      $configSection.innerHTML = '<input type="radio" id="config-' + app.name + '" name="' + app.name + '">'
+        + '<label for="config-' + app.name + '">Config</label>';
+      var $configContainer = document.createElement('div');
+      $configContainer.className = 'tab-panel';
+      $configContainer.innerHTML = '<div class="tab-content js-config-content">Fetching…</div>';
+      $configSection.appendChild($configContainer);
+      $configSection.querySelector('label')
                  .addEventListener('click',
-                                   onEnvClick.bind(onEnvClick, app.name, $envContainer),
+                                   onConfigClick.bind(onConfigClick, app.name, $configContainer),
                                    false);
 
       var $appLinkSection = document.createElement('section');
       $appLinkSection.className = 'tab';
-      $appLinkSection.innerHTML = '<a href="' + app.url + '" class="app-link">Visit app</a>'
+      $appLinkSection.innerHTML = '<a href="' + app.url + '" class="app-link">Go to</a>'
                                 + '<span class="anim-push icon-right"></span>';
 
       $appInfo.appendChild($commitSection);
       $appInfo.appendChild($logSection);
-      $appInfo.appendChild($envSection);
+      $appInfo.appendChild($configSection);
       $appInfo.appendChild($appLinkSection);
 
       $container.appendChild($title);

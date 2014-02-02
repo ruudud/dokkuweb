@@ -39,7 +39,7 @@
     $key.className = 'list-key-item';
 
     var $listIcon = document.createElement('span');
-    $listIcon.className = 'anim-unlock icon-key';
+    $listIcon.className = 'icon-remove';
     $key.appendChild($listIcon);
 
     var $textPad = document.createTextNode(' ');
@@ -64,7 +64,7 @@
     $el = document.getElementById('keys');
 
     var $container = document.createElement('ul');
-    $container.className = 'list-group';
+    $container.className = 'list-key';
     keys.forEach(function(fingerprint) {
       appendKey(fingerprint, $container);
     });
