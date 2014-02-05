@@ -10,6 +10,14 @@
     document.body.dispatchEvent(hideLogEvent);
   };
 
+  var onEnvClick = function(app, $container, event) {
+    var $el = $container.querySelector('.js-env-content');
+    var showEnvEvent = new CustomEvent('app:showEnv', {
+      detail: { app: app, el: $el }
+    });
+    document.body.dispatchEvent(showEnvEvent);
+  };
+
   var onLogClick = function(app, $container, event) {
     var $el = $container.querySelector('.js-log-content');
     var showLogEvent = new CustomEvent('app:showLog', {
@@ -77,6 +85,19 @@
                                    onLogClick.bind(onLogClick, app.name, $logContainer),
                                    false);
 
+      var $envSection = document.createElement('section');
+      $envSection.className = 'tab';
+      $envSection.innerHTML = '<input type="radio" id="env-' + app.name + '" name="' + app.name + '">'
+        + '<label for="env-' + app.name + '">Show environment</label>';
+      var $envContainer = document.createElement('div');
+      $envContainer.className = 'tab-panel';
+      $envContainer.innerHTML = '<div class="tab-content js-env-content">Fetching environment variables…</div>';
+      $envSection.appendChild($envContainer);
+      $envSection.querySelector('label')
+                 .addEventListener('click',
+                                   onEnvClick.bind(onEnvClick, app.name, $envContainer),
+                                   false);
+
       var $appLinkSection = document.createElement('section');
       $appLinkSection.className = 'tab';
       $appLinkSection.innerHTML = '<a href="' + app.url + '" class="app-link">Visit app</a>'
@@ -84,6 +105,7 @@
 
       $appInfo.appendChild($commitSection);
       $appInfo.appendChild($logSection);
+      $appInfo.appendChild($envSection);
       $appInfo.appendChild($appLinkSection);
 
       $container.appendChild($title);

@@ -23,6 +23,17 @@ case "$1" in
       echo "Application's container not found"
     fi
   ;;
+  ls-env-json)
+    APP="$2";
+    set +o pipefail
+    if [[ -f "$DOKKU_ROOT/$APP/ENV" ]]; then
+        # remove export if present, remove blank lines, trim whitespace
+        # only accept lines with =, trim final newline and parse in python
+        cat $DOKKU_ROOT/$APP/ENV | sed 's/^export //'| sed '/^$/d'|sed 's/^[ \t]*//;s/[ \t]*$//'|grep "="| tr -d '\n'| python -c 'import json, sys; envs = sys.stdin.read(); print json.dumps(dict(map(lambda x: x.split("="),envs.split("\n"))))'
+    else
+        echo "{}"
+    fi
+  ;;
 
   ls-apps-json)
     set +o pipefail
