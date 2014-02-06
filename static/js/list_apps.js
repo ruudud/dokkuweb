@@ -88,7 +88,7 @@
       var $envSection = document.createElement('section');
       $envSection.className = 'tab';
       $envSection.innerHTML = '<input type="radio" id="env-' + app.name + '" name="' + app.name + '">'
-        + '<label for="env-' + app.name + '">Show environment</label>';
+        + '<label for="env-' + app.name + '">Show env</label>';
       var $envContainer = document.createElement('div');
       $envContainer.className = 'tab-panel';
       $envContainer.innerHTML = '<div class="tab-content js-env-content">Fetching environment variables…</div>';

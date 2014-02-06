@@ -31,10 +31,9 @@
     console.error("Error when getting environment variables for app " + this.id, error);
   };
 
-  var showEnvironment = function (event) {
-      console.log('lols', event);
-     var envView = new EnvironmentView(event.detail.app, event.detail.el);
-     envView.start();
+  var showEnvironment = function(event) {
+    var envView = new EnvironmentView(event.detail.app, event.detail.el);
+    envView.start();
   };
 
   document.body.addEventListener('app:showEnv', showEnvironment);
