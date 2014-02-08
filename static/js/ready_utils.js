@@ -1,4 +1,7 @@
+/*jshint browser:true*/
+/*global xhr*/
 (function (window) {
+  'use strict';
   var isLoaded = false,
       fnq = [];
 

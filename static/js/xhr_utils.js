@@ -1,6 +1,8 @@
+/*jshint browser:true*/
+/*global Promise*/
 // Inspiration: http://www.html5rocks.com/en/tutorials/es6/promises/
 (function(xhr) {
-
+  'use strict';
   xhr.getJSON = function(url) {
     return xhr.get(url).then(JSON.parse);
   };
@@ -39,13 +41,13 @@
         else {
           // Otherwise reject with the status text
           // which will hopefully be a meaningful error
-          reject(Error(req.statusText));
+          reject(new Error(req.statusText));
         }
       };
 
       // Handle network errors
       req.onerror = function() {
-        reject(Error("Network Error"));
+        reject(new Error("Network Error"));
       };
 
       req.send(data);

@@ -1,5 +1,7 @@
+/*jshint browser:true*/
+/*global xhr*/
 (function() {
-
+  'use strict';
   var FETCH_INTERVAL = 5000;
 
   var LogView = function(id, $el) {

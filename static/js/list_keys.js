@@ -1,5 +1,7 @@
+/*jshint browser:true*/
+/*global xhr,onReady*/
 (function () {
-
+  'use strict';
   var domCache = {};
 
   var fetch = function() {
@@ -61,7 +63,7 @@
   };
 
   var render = function(keys) {
-    $el = document.getElementById('keys');
+    var $el = document.getElementById('keys');
 
     var $container = document.createElement('ul');
     $container.className = 'list-key';

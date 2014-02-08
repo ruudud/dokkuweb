@@ -1,4 +1,8 @@
+/*jshint browser:true*/
+/*global xhr,onReady*/
 (function() {
+  'use strict';
+
   var domCache = {};
 
   var save = function(data) {

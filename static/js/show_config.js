@@ -1,5 +1,7 @@
+/*jshint browser:true*/
+/*global xhr*/
 (function() {
-
+  'use strict';
   var createInput = function(value, disabled) {
     var $el = document.createElement('input');
     $el.setAttribute('type', 'text');
