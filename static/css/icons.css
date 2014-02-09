@@ -1,48 +1,71 @@
-/* Source of unicodes: http://copypastecharacter.com/ */
-[class*="icon-"] {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
+@font-face {
+	font-family: 'icomoon';
+	src:url('../font/icomoon.eot?g9ahfo');
+	src:url('../font/icomoon.eot?#iefixg9ahfo') format('embedded-opentype'),
+		url('../font/icomoon.woff?g9ahfo') format('woff'),
+		url('../font/icomoon.ttf?g9ahfo') format('truetype'),
+		url('../font/icomoon.svg?g9ahfo#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
-.icon-sun {
-    color: #ffad00;
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	vertical-align: middle;
 }
-.icon-sun:after {
-    content: '\2600';
+
+.icon-cog:before {
+	content: "\e601";
 }
-.icon-rain {
-    color: #222;
+.icon-tree:before {
+	content: "\e602";
 }
-.icon-rain:after {
-    content: '\2614';
+.icon-menu:before {
+	content: "\e603";
 }
-.icon-key {
-    color: #222;
-    -webkit-transform: rotate(90deg) translatex(4px);
-       -moz-transform: rotate(90deg) translatex(4px);
-            transform: rotate(90deg) translatex(4px);
-    vertical-align: top;
+.icon-lightning:before {
+	content: "\e604";
 }
-.icon-key:after {
-    content: '\26B7 ';
+.icon-switch:before {
+	content: "\e605";
 }
-.icon-remove {
-    color: #f00;
+.icon-link:before {
+	content: "\e606";
 }
-.icon-remove:after {
-    content: '\2716';
+.icon-heart:before {
+	content: "\e607";
 }
-.icon-add {
-    color: #0f0;
+.icon-close:before {
+	content: "\e608";
 }
-.icon-add:after {
-    content: '\271A';
+.icon-checkmark:before {
+	content: "\e609";
 }
-.icon-right {
-    display: none;
+.icon-github:before {
+	content: "\e60a";
 }
-.icon-right:after {
-    content: '\2192';
+.icon-home:before {
+	content: "\e60b";
+}
+.icon-brightness-medium:before {
+	content: "\e60c";
+}
+.icon-file:before {
+	content: "\e60d";
+}
+.icon-plus:before {
+	content: "\e600";
+}
+.icon-loop:before {
+	content: "\e60e";
 }

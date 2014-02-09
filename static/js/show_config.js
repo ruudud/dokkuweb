@@ -56,7 +56,7 @@
     var $value = createInput(value, true);
 
     var $remove = document.createElement('button');
-    $remove.textContent = 'Delete';
+    $remove.innerHTML = '<span class="icon-close"></span>';
     $remove.addEventListener('click', this.deleteConfig.bind(this, key), false);
 
     $input.appendChild($value);

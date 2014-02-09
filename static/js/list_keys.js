@@ -41,7 +41,7 @@
     $key.className = 'list-key-item';
 
     var $listIcon = document.createElement('span');
-    $listIcon.className = 'icon-remove';
+    $listIcon.className = 'icon-close';
     $key.appendChild($listIcon);
 
     var $textPad = document.createTextNode(' ');

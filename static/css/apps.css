@@ -36,8 +36,6 @@
     padding: 10px;
 
     background: #fff;
-    color: rgb(0,0,255);
-    text-decoration: underline;
     cursor: pointer;
 }
 .tab label:hover, .tab a:hover {

@@ -47,8 +47,8 @@
       $title.className = 'app-title';
       $title.textContent = app.name + ' ';
 
-      var statusCss = healthy ? 'anim-pulse icon-sun'
-                              : 'anim-shake icon-rain';
+      var statusCss = healthy ? 'anim-pulse icon-brightness-medium'
+                              : 'anim-shake icon-lightning';
       var $statusIcon = document.createElement('span');
       $statusIcon.className = statusCss;
       $title.appendChild($statusIcon);
@@ -63,7 +63,7 @@
       var $commitSection = document.createElement('section');
       $commitSection.className = 'tab';
       $commitSection.innerHTML = '<input type="radio" id="commit-' + app.name + '" name="' + app.name + '" checked>'
-        + '<label for="commit-' + app.name + '">Last commit</label>';
+        + '<label for="commit-' + app.name + '"><span class="icon-tree"></span> Last commit</label>';
 
       var $commitPanel = document.createElement('div');
       $commitPanel.className = 'tab-panel';
@@ -83,7 +83,7 @@
       var $logSection = document.createElement('section');
       $logSection.className = 'tab';
       $logSection.innerHTML = '<input type="radio" id="log-' + app.name + '" name="' + app.name + '">'
-        + '<label for="log-' + app.name + '">Show log</label>';
+        + '<label for="log-' + app.name + '"><span class="icon-file"></span> Log</label>';
       var $logContainer = document.createElement('div');
       $logContainer.className = 'tab-panel';
       $logContainer.innerHTML = '<div class="tab-content"><pre class="js-log-content">Fetching…</pre></div>';
@@ -96,7 +96,7 @@
       var $configSection = document.createElement('section');
       $configSection.className = 'tab';
       $configSection.innerHTML = '<input type="radio" id="config-' + app.name + '" name="' + app.name + '">'
-        + '<label for="config-' + app.name + '">Config</label>';
+        + '<label for="config-' + app.name + '"><span class="icon-cog"></span> Config</label>';
       var $configContainer = document.createElement('div');
       $configContainer.className = 'tab-panel';
       $configContainer.innerHTML = '<div class="tab-content js-config-content">Fetching…</div>';
