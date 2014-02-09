@@ -2,6 +2,9 @@
 /*global xhr*/
 (function() {
   'use strict';
+
+  var BASEURL = '/cgi-bin/config';
+
   var createInput = function(value, disabled) {
     var $el = document.createElement('input');
     $el.setAttribute('type', 'text');
@@ -12,29 +15,20 @@
     return $el;
   };
 
-  var createConfigRow = function(key, value) {
-    var $configRow = document.createElement('li');
-    $configRow.innerHTML = '<span class="icon-remove"></span>';
-    var $key = createInput(key, true);
-    var $value = createInput(value, false);
-
-    $configRow.appendChild($key);
-    $configRow.appendChild($value);
-    return $configRow;
-  };
-
   var ConfigView = function(id, $el) {
     this.id = id;
     this.$el = $el;
+    this._url = BASEURL + '?app=' + id;
   };
   ConfigView.prototype.fetch = function() {
-    return xhr.getJSON('/cgi-bin/config?app=' + this.id);
+    return xhr.getJSON(this._url);
   };
   ConfigView.prototype.render = function(config) {
+
     this.$el.innerHTML = '';
     var $container = document.createElement('ul');
     for (var key in config) {
-      var $configLine = createConfigRow(key, config[key]);
+      var $configLine = this._createConfigRow(key, config[key]);
       $container.appendChild($configLine);
     }
     this.$el.appendChild($container);
@@ -44,6 +38,33 @@
     this.fetch()
         .then(this.render.bind(this))
         .catch(this._fetchError.bind(this));
+  };
+  ConfigView.prototype.deleteConfig = function(key) {
+    return xhr.delete(this._url + '&key=' + key)
+              .then(this.start.bind(this));
+  };
+  ConfigView.prototype._createConfigRow = function(key, value) {
+    var $configRow = document.createElement('li');
+    $configRow.className = 'row';
+
+    var $key = document.createElement('div');
+    $key.textContent = key;
+
+    var $input = document.createElement('div');
+    $input.className = 'postfixed-input';
+
+    var $value = createInput(value, true);
+
+    var $remove = document.createElement('button');
+    $remove.textContent = 'Delete';
+    $remove.addEventListener('click', this.deleteConfig.bind(this, key), false);
+
+    $input.appendChild($value);
+    $input.appendChild($remove);
+
+    $configRow.appendChild($key);
+    $configRow.appendChild($input);
+    return $configRow;
   };
   ConfigView.prototype._fetchError = function(error) {
     console.error("Error when getting configs for app " + this.id, error);

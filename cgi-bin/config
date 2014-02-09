@@ -1,8 +1,6 @@
 #!/bin/bash
 #
-# Get and set ENV for app
-#
-# Mix QUERY and POST params for now..
+# Get and set config (environment) for app
 #
 
 if [[ "$SCRIPT_FILENAME" ]]; then

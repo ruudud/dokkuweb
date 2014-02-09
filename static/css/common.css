@@ -1,9 +1,15 @@
+* {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
 html {
     font-size: 100%;
 }
 body {
     margin: 0;
 }
+
 /** Container **/
 .container {
     padding: 8px 8px;
@@ -19,14 +25,75 @@ body {
     }
 }
 
+/** Gridish **/
+.row:before, .row:after {
+    content: ' ';
+    display: table;
+    width: 100%;
+}
+
+/** Button **/
+button {
+    display: inline-block;
+    padding: 6px 12px;
+    line-height: 1.428571429;
+
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-decoration: underline;
+
+    cursor: pointer;
+    border: 1px solid rgb(210,210,210);
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+
+    position: relative;
+    left: -1px;
+    z-index: 2;
+    background-color: rgb(221,221,221);
+    transition: background-color 300ms ease-in-out;
+}
+button:hover {
+    background-color: rgb(210,210,210);
+}
+
 /** Form elements **/
-textarea {
+input[type="text"], textarea {
+    -webkit-appearance: none;
+       -moz-appearance: none;
     display: block;
     width: 100%;
+    padding: 0.44444rem;
+
+    color: #222;
+    font-size: 0.77778rem;
+    background: white;
+    border: 1px solid #ccc;
+}
+input[type="text"]:focus, textarea:focus {
+    background: #fafafa;
+}
+textarea {
     min-height: 4em;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+}
+input[type="text"] {
+    margin: 0 0 0.88889rem 0;
+    height: 2.05556rem;
+}
+.postfixed-input {
+}
+.postfixed-input input {
+    float: left;
+    width: 83.33333%;
+    border-right: 0;
+}
+.postfixed-input button {
+    float: right;
+    width: 16.66667%;
+    height: 2.05556rem;
 }
 
 /** Lists **/

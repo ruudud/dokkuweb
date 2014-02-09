@@ -34,6 +34,12 @@
 .icon-remove:after {
     content: '\2716';
 }
+.icon-add {
+    color: #0f0;
+}
+.icon-add:after {
+    content: '\271A';
+}
 .icon-right {
     display: none;
 }
