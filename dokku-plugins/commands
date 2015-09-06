@@ -29,12 +29,13 @@ case "$1" in
     cd "$DOKKU_ROOT"
     for app in `ls -d */ | grep -v 'ssl\/' | sed -e 's,/$,,'`; do
       [[ ! -f "$app/CONTAINER" ]] && continue
+      [[ ! -f "$app/URLS" ]] && continue
 
       cid=$(cat $app/CONTAINER | cut -b1-12)
 
       [[ -z $cid ]] && continue
 
-      url=$(cat $app/URL)
+      url=$(cat $app/URLS | sed '2q;d')
       lastcommitHash=$(cat $app/refs/heads/master)
       lastcommit=$(cd $app && git cat-file commit `cat refs/heads/master` \
           | python -c 'import json,sys; print json.dumps(sys.stdin.read())')
