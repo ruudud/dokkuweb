@@ -18,7 +18,7 @@ do_GET() {
   echo "Status: 200 OK"
   echo "Cache-control: max-age=4"
   echo ""
-  dokku error-logs "$app"
+  sudo -u dokku dokku error-logs "$app"
 }
 
 # Common headers

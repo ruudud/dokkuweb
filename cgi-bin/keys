@@ -14,7 +14,7 @@ do_GET() {
   local keys oldifs
   oldifs=$IFS
   IFS=$'\r\n'
-  keys=( $(dokku ls-keys $REMOTE_USER) )
+  keys=( $(sudo -u dokku dokku ls-keys $REMOTE_USER) )
   IFS=$oldifs
 
   echo "Status: 200 OK"
@@ -46,7 +46,7 @@ do_DELETE() {
   elif [[ -z "$fingerprint" ]]; then
     do_400 "Missing query parameter 'fingerprint'" && return
   fi
-  error_msg=$(dokku rm-key $REMOTE_USER $fingerprint)
+  error_msg=$(sudo -u dokku dokku rm-key $REMOTE_USER $fingerprint)
   if [[ "$?" -ne 0 ]]; then
     do_500 "Something went wrong when trying to delete key: $error_msg"
     return

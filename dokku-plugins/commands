@@ -16,22 +16,23 @@ case "$1" in
       exit 1
     fi
 
-    if [[ -f "$DOKKU_ROOT/$APP/CONTAINER" ]]; then
-      CONTAINER=$(<$DOKKU_ROOT/$APP/CONTAINER)
+    if [[ -f "$DOKKU_ROOT/$APP/CONTAINER.web.1" ]]; then
+      CONTAINER=$(<$DOKKU_ROOT/$APP/CONTAINER.web.1)
       docker logs $CONTAINER 2>&1 | tail -n 100
     else
       echo "Application's container not found"
     fi
-  ;;
+    ;;
   ls-apps-json)
     set +o pipefail
 
+    containers=$(docker ps -a)
     cd "$DOKKU_ROOT"
     for app in `ls -d */ | grep -v 'ssl\/' | sed -e 's,/$,,'`; do
-      [[ ! -f "$app/CONTAINER" ]] && continue
+      [[ ! -f "$app/CONTAINER.web.1" ]] && continue
       [[ ! -f "$app/URLS" ]] && continue
 
-      cid=$(cat $app/CONTAINER | cut -b1-12)
+      cid=$(cat $app/CONTAINER.web.1 | cut -b1-12)
 
       [[ -z $cid ]] && continue
 
@@ -39,7 +40,7 @@ case "$1" in
       lastcommitHash=$(cat $app/refs/heads/master)
       lastcommit=$(cd $app && git cat-file commit `cat refs/heads/master` \
           | python -c 'import json,sys; print json.dumps(sys.stdin.read())')
-      psinfo=$(docker ps -a \
+      psinfo=$(echo "$containers" \
           | grep "$cid" \
           | awk -F '  +' -v q='"' '{OFS=","}
                 { print ",\"created\":"q$4q,"\"status\":"q$5q }')
@@ -48,7 +49,7 @@ case "$1" in
     done
 
     set -o pipefail
-  ;;
+    ;;
   ls-keys)
     if [[ -z $2 ]]; then
       echo "Missing username"
@@ -57,23 +58,27 @@ case "$1" in
     grep "NAME=$2" $AUTHORIZED_KEYS \
         | awk '{print $1 " " $8}' \
         | sed 's/command="FINGERPRINT=//'
-  ;;
+    ;;
   rm-key)
     if [[ -z $2 ]] || [[ -z $3 ]]; then
       echo "Missing username or fingerprint"
       exit 1
     fi
     sed -i "/FINGERPRINT=$3\sNAME=$2/d" $AUTHORIZED_KEYS
-  ;;
+    ;;
 
   help)
-    cat && cat<<EOF
+    cat<<EOF
     error-logs                                      Print stderr from docker logs
     ls-apps-json                                    List all apps with status
     ls-keys                                         List all fingerprints for user
     rm-key                                          Delete key for user
 EOF
-  ;;
+    ;;
+
+  *)
+    exit $DOKKU_NOT_IMPLEMENTED_EXIT
+    ;;
 
 esac
 

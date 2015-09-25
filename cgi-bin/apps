@@ -13,7 +13,7 @@ fi
 echo_apps_array() {
   local oldifs=$IFS
   IFS=$(echo -en "\n\b")
-  local apps=( $(dokku ls-apps-json) )
+  local apps=( $(sudo -u dokku dokku ls-apps-json) )
   echo_json_array apps[@]
   IFS=$oldifs
 }

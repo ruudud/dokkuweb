@@ -18,7 +18,7 @@ do_DELETE() {
   elif [[ -z "$app" ]]; then
     do_400 "Missing query parameter 'key'" && return
   fi
-  error_msg=$(dokku config:unset "$app" "$key")
+  error_msg=$(sudo -u dokku dokku config:unset "$app" "$key")
 
   if [[ "$?" -ne 0 ]]; then
     do_500 "Something went wrong when trying to unset config: $error_msg"
@@ -35,7 +35,7 @@ do_POST() {
     do_400 "Missing query parameter 'app'" && return
   fi
   configs=$(echo "$QUERY_STRING_POST" | sed 's,&, ,g')
-  error_msg=$(dokku config:set "$app" "$configs")
+  error_msg=$(sudo -u dokku dokku config:set "$app" "$configs")
 
   if [[ "$?" -ne 0 ]]; then
     do_500 "Something went wrong when trying to set config: $error_msg"
@@ -56,7 +56,7 @@ do_GET() {
 
   oldifs=$IFS
   IFS=$'\r\n'
-  vars=( $(dokku config "$app" | awk -F ': +' 'NR > 1 {print $1,$2}') )
+  vars=( $(sudo -u dokku dokku config "$app" | awk -F ': +' 'NR > 1 {print $1,$2}') )
   IFS=$oldifs
 
   echo "Status: 200 OK"
